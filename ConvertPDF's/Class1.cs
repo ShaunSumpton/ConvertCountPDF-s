@@ -20,10 +20,19 @@ namespace ConvertPDF_s
 
                 string filename = pdfFile.FullName;
                 string filen = pdfFile.Name;
+                string dirf = pdfFile.DirectoryName;
+
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(filename));
                 int numberOfPages = pdfDoc.GetNumberOfPages();
-                Console.WriteLine(filen + "| Number of Pages: " + numberOfPages);
-                
+
+                using (StreamWriter sw = new StreamWriter(dirf + @"\counts.txt", true))
+                {
+
+                    sw.WriteLine(filen + ", Number of Pages: " + numberOfPages); // name of page 1
+                    sw.WriteLine(" ");
+
+                }
+                    //Console.WriteLine(filen + "| Number of Pages: " + numberOfPages);
 
             }
         }
