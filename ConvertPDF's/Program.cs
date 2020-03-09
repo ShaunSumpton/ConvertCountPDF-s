@@ -26,9 +26,12 @@ namespace ConvertPDF_s
             
             Console.Write("Enter directory containing PDF's:");  // ask user for location of files
             string dir = Console.ReadLine();
+            Console.WriteLine("");
 
             Console.WriteLine("1) Count Pages in PDF's");
-            Console.WriteLine("2) Convert word to PDF's"); // ask use to select an option
+            Console.WriteLine("2) Convert word to PDF's");
+            Console.WriteLine("3) Split PDF's" + Environment.NewLine);
+            // ask use to select an option
             Console.Write("Select Option e.g 1: ");
             int Option = Convert.ToInt32(Console.ReadLine().Trim());
 
@@ -36,64 +39,73 @@ namespace ConvertPDF_s
             {
                 CountPDFPages.GetPages(dir);
             }
-
-            var files = new DirectoryInfo(dir);
-            var wordFiles = GetFilesByExtensions(files, ".doc", ".docx"); // get all files in specified directory with .doc and .docx file extensions
-
-            word.Visible = false;
-            word.ScreenUpdating = false; // make sure work doesnt show
-
-            foreach (FileInfo wordFile in wordFiles)
+            else if (Option == 3)
             {
-                // Cast as Object for word Open method
-                Object filename = (Object)wordFile.FullName;
-
-                // Use the dummy value as a placeholder for optional arguments
-                Document doc = word.Documents.Open(ref filename, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing);
-                doc.Activate();
-
-                object outputFileName = wordFile.FullName; // fullname of word doc
-
-                if (wordFile.FullName.EndsWith(".doc"))
-                {
-                    outputFileName = wordFile.FullName.Replace(".doc", ".pdf");
-                }
-                else
-                {
-                    outputFileName = wordFile.FullName.Replace(".docx", ".pdf"); // changing extension
-                }
-
-
-                object fileFormat = WdSaveFormat.wdFormatPDF;
-
-                // testing d
-                // Save document into PDF Format
-                doc.SaveAs(ref outputFileName,
-                    ref fileFormat, ref oMissing, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing,
-                    ref oMissing, ref oMissing, ref oMissing, ref oMissing); // saving 
-
-                // Close the Word document, but leave the Word application open.
-                // doc has to be cast to type _Document so that it will find the
-                // correct Close method.                
-                object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
-                ((_Document)doc).Close(ref saveChanges, ref oMissing, ref oMissing);
-                doc = null;
-
+                SplitPDFs.GetSplitPDFs(dir);
 
             }
+            else
+            {
 
-// word has to be cast to type _Application so that it will find
-// the correct Quit method.
-((_Application)word).Quit(ref oMissing, ref oMissing, ref oMissing);
-            word = null;
 
-         
+                var files = new DirectoryInfo(dir);
+                var wordFiles = GetFilesByExtensions(files, ".doc", ".docx"); // get all files in specified directory with .doc and .docx file extensions
 
+                word.Visible = false;
+                word.ScreenUpdating = false; // make sure work doesnt show
+
+                foreach (FileInfo wordFile in wordFiles)
+                {
+                    // Cast as Object for word Open method
+                    Object filename = (Object)wordFile.FullName;
+
+                    // Use the dummy value as a placeholder for optional arguments
+                    Document doc = word.Documents.Open(ref filename, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+                    doc.Activate();
+
+                    object outputFileName = wordFile.FullName; // fullname of word doc
+
+                    if (wordFile.FullName.EndsWith(".doc"))
+                    {
+                        outputFileName = wordFile.FullName.Replace(".doc", ".pdf");
+                    }
+                    else
+                    {
+                        outputFileName = wordFile.FullName.Replace(".docx", ".pdf"); // changing extension
+                    }
+
+
+                    object fileFormat = WdSaveFormat.wdFormatPDF;
+
+
+                    // Save document into PDF Format
+                    doc.SaveAs(ref outputFileName,
+                        ref fileFormat, ref oMissing, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                        ref oMissing, ref oMissing, ref oMissing, ref oMissing); // saving 
+
+                    // Close the Word document, but leave the Word application open.
+                    // doc has to be cast to type _Document so that it will find the
+                    // correct Close method.                
+                    object saveChanges = WdSaveOptions.wdDoNotSaveChanges;
+                    ((_Document)doc).Close(ref saveChanges, ref oMissing, ref oMissing);
+                    doc = null;
+
+
+                }
+
+            }
+                    // word has to be cast to type _Application so that it will find
+                    // the correct Quit method.
+                    ((_Application)word).Quit(ref oMissing, ref oMissing, ref oMissing);
+                                    word = null;
+
+
+           
 
         }
 

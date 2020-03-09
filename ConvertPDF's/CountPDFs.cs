@@ -9,8 +9,6 @@ namespace ConvertPDF_s
 
         public static void GetPages(string fpath)
         {
-            // Right side of equation is location of YOUR pdf file
-           
 
             var files = new DirectoryInfo(fpath);
             var pdfFiles = Program.GetFilesByExtensions(files, ".pdf");
@@ -28,13 +26,15 @@ namespace ConvertPDF_s
                 using (StreamWriter sw = new StreamWriter(dirf + @"\counts.txt", true))
                 {
 
-                    sw.WriteLine(filen + ", Number of Pages: " + numberOfPages); // name of page 1
+                    sw.WriteLine(filen + "| Number of Pages: " + numberOfPages); // name of page 1
                     sw.WriteLine(" ");
 
                 }
                     //Console.WriteLine(filen + "| Number of Pages: " + numberOfPages);
 
             }
+
+            Console.WriteLine("Operation Complete");
         }
 
 
