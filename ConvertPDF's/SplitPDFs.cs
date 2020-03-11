@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using iText.Kernel.Pdf;
-using iText.Layout;
 using iText.Kernel.Utils;
 
 namespace ConvertPDF_s
