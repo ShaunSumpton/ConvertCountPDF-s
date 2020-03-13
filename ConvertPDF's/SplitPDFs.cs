@@ -10,22 +10,22 @@ namespace ConvertPDF_s
         public static void GetSplitPDFs(string fpath)
         {
 
-            var files = new DirectoryInfo(fpath);
-            var pdfFiles = Program.GetFilesByExtensions(files, ".pdf");
+            var files = new DirectoryInfo(fpath); // get directory info from file path
+            var pdfFiles = Program.GetFilesByExtensions(files, ".pdf"); // get all files with the extension of .PDF
 
             foreach (FileInfo pdfFile in pdfFiles)
             {
 
-                string filename = pdfFile.FullName;
-                string filen = pdfFile.Name;
-                string dirf = pdfFile.DirectoryName;
+                string filename = pdfFile.FullName; // Full FileName including extentions and directory
+                string filen = pdfFile.Name; // get just file name
+                string dirf = pdfFile.DirectoryName; // get just directory
 
                 
 
 
                 using (PdfDocument pdfDoc = new PdfDocument(new PdfReader(filename)))
                 {
-                    var splitDocuments = new MyPdfSplitter(pdfDoc, dirf,filen).SplitByPageCount(1);
+                    var splitDocuments = new MyPdfSplitter(pdfDoc, dirf,filen).SplitByPageCount(1); // split PDF
                     foreach (var splitDocument in splitDocuments)
                     {
                         splitDocument.Close();
@@ -40,7 +40,7 @@ namespace ConvertPDF_s
         }
 
 
-        public class MyPdfSplitter : PdfSplitter
+        public class MyPdfSplitter : PdfSplitter // class to split PDF's
         {
             private readonly string _destFolder;
             private int _pageNumber;
@@ -54,7 +54,7 @@ namespace ConvertPDF_s
             protected override PdfWriter GetNextPdfWriter(PageRange documentPageRange)
             {
                 _pageNumber++;
-                return new PdfWriter(Path.Combine(_destFolder, $"p{_pageNumber} {_filename}.pdf"));
+                return new PdfWriter(Path.Combine(_destFolder, $"p{_pageNumber} {_filename}.pdf")); // Page number and filename
             }
         }
 

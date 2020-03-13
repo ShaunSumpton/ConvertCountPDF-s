@@ -31,30 +31,64 @@ namespace ConvertPDF_s
             Console.WriteLine("1) Count Pages in PDF's");
             Console.WriteLine("2) Convert word to PDF's");
             Console.WriteLine("3) Split PDF's");
-            Console.WriteLine("4) Import Delim File" + Environment.NewLine);
+            Console.WriteLine("4) Import Delim File");
+            Console.WriteLine("5) Count Number of Rows in Excel File" + Environment.NewLine);
             // ask use to select an option
             Console.Write("Select Option e.g 1: ");
-            int Option = Convert.ToInt32(Console.ReadLine().Trim());
-
-            if (Option == 1)
+            try
             {
-                CountPDFPages.GetPages(dir);
+                int Option = Convert.ToInt32(Console.ReadLine().Trim());
+
+                //if (Option == 1)
+                //{
+                //    CountPDFPages.GetPages(dir);
+                //}
+                //else if (Option == 3)
+                //{
+                //    SplitPDFs.GetSplitPDFs(dir);
+
+                //}
+                //else if (Option == 2)
+                //{
+                //    WordtoPDF.GetWordtoPDF(dir);
+                //}
+                //else if (Option  == 4)
+
+                //    DelimFile.GetDelimFile(dir);
+                // else
+                //{
+
+                //}
+
+                switch (Option)
+                {
+                    case 1:
+                        CountPDFPages.GetPages(dir);
+                        break;
+                    case 2:
+                        WordtoPDF.GetWordtoPDF(dir);
+                        break;
+                    case 3:
+                        SplitPDFs.GetSplitPDFs(dir);
+                        break;
+                    case 4:
+                        DelimFile.GetDelimFile(dir);
+                        break;
+                    case 5:
+
+                        break;
+                    default:
+                        Console.WriteLine("No Option Selected");
+                        System.Environment.Exit(1);
+                        break;
+
+
+                }
             }
-            else if (Option == 3)
+            catch (Exception e)
             {
-                SplitPDFs.GetSplitPDFs(dir);
-
+                Console.WriteLine(e);
             }
-            else if (Option == 2)
-            {
-                WordtoPDF.GetWordtoPDF(dir);
-            }
-            else
-
-                DelimFile.GetDelimFile(dir);
-                
-
-           
 
         }
 
