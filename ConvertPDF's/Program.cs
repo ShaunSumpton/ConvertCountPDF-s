@@ -75,7 +75,7 @@ namespace ConvertPDF_s
                         DelimFile.GetDelimFile(dir);
                         break;
                     case 5:
-
+                        CountRows.GetCountRows(dir);
                         break;
                     default:
                         Console.WriteLine("No Option Selected");
